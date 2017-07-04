@@ -137,20 +137,32 @@ pdfborderstyle={/S/U/W 1}%
 \newpage
 \section{Introducción}
  
-En este informe se desarrolla el modelado, la implementación y la documentación de un sistema de Computación. Un Sistema de computación o también llamado “Cyber Physical System” está constituido tanto por componentes de hardware como por software además de la relación que el mismo tiene con el usuario y con el ambiente que lo rodea. En este caso, se desarrollará un sistema de control de un portón electrico con conexion remota mediante un dispositivo móvil.
-Para la realización de este proyecto se tendrá en cuenta el standard SYSML para el modelado del problema. El mismo provee un esquema gráfico que facilita el diseño del sistema y a su vez ayuda en la obtención de requerimientos funcionales
+En este informe se desarrolla el modelado, la implementación y la documentación de un sistema de Computación. Un Sistema de computación o también llamado “Cyber Physical System” está constituido tanto por componentes de hardware como por software además de la relación que el mismo tiene con el usuario y con el ambiente que lo rodea. En este caso, se desarrollará un sistema de control de un portón electrico con conexion remota mediante un dispositivo móvil. \\
+Para la realización de este proyecto se tendrá en cuenta el standard SYSML para el modelado del problema. El mismo provee un esquema gráfico que facilita el diseño del sistema y a su vez ayuda en la obtención de requerimientos funcionales. \\
 El sistema desarrollado tiene un enfoque principalmente al usuario. Por ende se tiene en cuenta el fácil uso y la sencilla implementación teniendo, por este motivo, algunas limitaciones en lo tecnológico.
 
 \section{Marco Teórico}
 \section{Requerimientos Funcionales}
 \subsection{Instalación sencilla}
-Actualmente, los portones automaticos manejados por un simple control remoto independiente, dominan el mercado. Para que los usuarios tomen la iniciativa de cambiar de sistema este nuevo sistema debe ser de fácil y rápida instalación, de no ser así, los usuarios no optarian por realizar el cambio ya que implicaria un gran gasto de dinero y tiempo.
-Para lograr esto, el hardware utilizado será un simple embedido de bajo costo y gran disponibilidad. 
+Actualmente, los portones automáticos manejados por un simple control remoto independiente, dominan el mercado. Para que los usuarios tomen la iniciativa de cambiar de sistema este nuevo sistema debe ser de fácil y rápida instalación, de no ser así, los usuarios no optarían por realizar el cambio ya que implicaría un gran gasto de dinero y tiempo.
+Para lograr esto, el hardware utilizado será un simple embebido de bajo costo y gran disponibilidad. 
 \subsection{Fácil uso}
-La inerfáz de usuario debe ser amigable e intuitiba. Tendrá un diseño orientado para dispositivos táctiles. No contendra muchas opciones de configuracion, ya que esto sera concentrado en el servidor de control.
+La interfáz de usuario debe ser amigable e intuitiva. Tendrá un diseño orientado para dispositivos táctiles. No contendrá muchas opciones de configuración, ya que esto sera concentrado en el servidor de control.
 \subsection{Seguridad}
 Aquí se exige que solamente el usuario autorizado pueda ser capaz de controlar el comportamiento del portón. Para esto, se le solicitará al usuario se registre inicialmente en el sistema. Luego, cuando se desee abrir o cerrar el porton dicho usuario deberá proporcionar un PIN de autenticación extra.
 \section{Diseño}
+
+
+\section{Decisión de diseño}
+Luego de la descripción y modelado del sistema se define los recursos puntales que usaremos. Los mismos son los siguientes:
+
+\begin{itemize}
+        \item   Hardware Embebido: Raspberry Pi 3; este hardware tiene la capacidad de procesamiento necesaria para soportar los requerimientos del sistema, además de las interfaces necesarias como conectividad WiFi.
+        \item App Control: se desarrollará en el lenguaje Python. Python es un lenguaje interpretado que posee gran cantidad de librerías para el manejo de interfaces en la Raspberry Pi. Además es de muy fácil uso y tiene una comunidad grande para enfrentar cualquier dificultad.
+        \item   App Celular: se usará Android Studio para crear la aplicación de celular. El mismo brinda un manejo muy fácil para programan, montando en java y con gran cantidad de clases de uso general del dispositivo.
+
+    \end{itemize}
+    
 \section{Bibliografía}
 
 
