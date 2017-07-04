@@ -151,7 +151,41 @@ La interfáz de usuario debe ser amigable e intuitiva. Tendrá un diseño orient
 \subsection{Seguridad}
 Aquí se exige que solamente el usuario autorizado pueda ser capaz de controlar el comportamiento del portón. Para esto, se le solicitará al usuario se registre inicialmente en el sistema. Luego, cuando se desee abrir o cerrar el porton dicho usuario deberá proporcionar un PIN de autenticación extra.
 \section{Diseño}
+SysMl define tres grupos de diagramas a alto nivel, estructura (modelo estático), comportamiento (modelo dinamico) y requerimientos. Los requerimientos en este caso ya fueron definidos anteriormente, ahora definiremos los bloque restantes: 
+\subsection{Modelado a nivel de sistema}
+Para este caso se utilizo un diagrama de definición de bloques para mostrar la relación entre los elementos del sistema y los elementos externos que afectaran al comportamiento del sistema.
+\begin{figure}[H]
+	\center{\includegraphics[width=0.8\linewidth]{./images/Diagrama de estructura.png}}
+\end{figure}
+Se puede ver que la zona sombreada son los elementos que son parte del sistema y en el extremo inferior los elementos que afectan en su comportamiento
+\\
+Una vez definida la relación del sistema con su entorno se definen los bloques internos de las partes de los elementos del sistema en este caso la App Movil y App Control
+\\
+\begin{itemize}
+	\item App Movil Es la aplicación que correrá en el dispositivo móvil del cliente, por lo tanto se deberan tener en cuenta las librerias que perimitan a la aplicacion comunicarse con el entrno
+	\begin{figure}[H]
+		\centering{\includegraphics[width=0.8\linewidth]{./images/AppCelular.png}}
+	\end{figure}
+	\item App Control esta aplicación correrá en el hardware embebido, por lo tanto también deberá incluir las librerías de los módulos que utilizará.
+	\begin{figure}[H]
+		\centering \includegraphics[width=0.8\linewidth]{./images/AppControl.png}
+	\end{figure}
+\end{itemize}
 
+\subsection{Comportamiento}
+Para comenzar con el análisis de comportamiento se realizo un diagrama de casos de uso que brinda una una descripción a muy alto nivel de las funcionalidades del sistema, respecto al usuario. Dado que el comportamiento del sistema es muy sencillo en este caso solo se analiza un caso de uso.
+\begin{figure}[H]
+	\centering 
+	{\includegraphics[width=0.3\linewidth]{./images/CasosDeUso.png}}
+\end{figure}
+Una vez definido el caso de uso, se analizan las acciones que se deben llevar a cabo para cumplir con esa funcionalidad para esto se confecciona diagrama de actividad.
+\begin{figure}[H]
+	\center{\includegraphics[width=0.3\linewidth]{./images/Actividad.png}}
+\end{figure}
+Un diagrama de secuencia nos mostrara la interacción entre las diferentes partes del sistema cuando durante el caso de uso abrir/cerrar portón:
+\begin{figure}[H]
+	\center{\includegraphics[width=0.8\linewidth]{./images/Secuencia.png}}
+\end{figure}
 
 \section{Decisión de diseño}
 Luego de la descripción y modelado del sistema se define los recursos puntales que usaremos. Los mismos son los siguientes:
