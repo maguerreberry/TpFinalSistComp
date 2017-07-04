@@ -142,14 +142,55 @@ Para la realización de este proyecto se tendrá en cuenta el standard SYSML par
 El sistema desarrollado tiene un enfoque principalmente al usuario. Por ende se tiene en cuenta el fácil uso y la sencilla implementación teniendo, por este motivo, algunas limitaciones en lo tecnológico.
 
 \section{Marco Teórico}
+Se va a desarrollar un controlador para portones automáticos que permite una rápida instalación en un portón automático convencional, controlado desde una aplicacion de celular. \\
+La motivación es que los usuarios no tengan riesgos de extraviar los controles de los portones automáticos, lo cual no solo afectaría al usuario en que no podrá ingresar a su garaje sino que también sería una amenaza a su seguridad ya que un control convencional no cuenta con una autenticación de usuario. 
+\subsection{Comparación con potenciales competidores}
+
+Se analizó las ofertas en el mercado de productos similares o sustitutos al sistema que se va a desarrollar. En un principio tras un análisis en el mercado local (Argentina) no se obtuvieron resultados de un producto que se encontrara a la venta con estas características.
+Por otro lado en un mercado más amplio se obtuvieron dos resultados de productos sustitutos, ambos cumplen la misma funcionalidad pero implementados de diferente manera
+\subsubsection{OPEN-SESAME}
+
+Open Sesame Garage Door Opener ofrece una pequeña caja bluetooth y una aplicación para smartphone que controla el portón a través de una conexión bluetooth. El precio de este producto es el de un control regular, incentivando a los clientes de esta forma a reemplazar los controles infrarrojos convencionales.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.7]{./images/opensesame.png}
+	\caption{\textit{ Logo de Gogogate}}
+\end{figure}
+
+\href{https://www.mygarageopener.com/}{Pagina web de OPEN-SESAME}
+
+
+
+\subsubsection{GOGOGATE}
+
+Es una solución más completa, a diferencia del producto anterior este se comunica con el cliente a través de la red LAN del hogar.  Tiene una aplicación móvil mucho más completa con control de acceso de usuarios, permitiendo el ingreso de diferentes clases de usuarios, un servicio de cámara para monitorear el garage, una sirena que advierte cuando el portón se abre o cierra, sensor de temperatura, entre otros servicios.  Desde el punto de vista de hardware ofrece un dispositivo con cámara y alarma integrada, capacidad para conexión por ethernet o wireless
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.7]{./images/gogogate_logo.png}
+	\caption{\textit{ Logo de Gogogate}}
+\end{figure}
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.6]{./images/gogogate_disp.png}
+	\caption{\textit{ Dispositivo de Gogogate}}
+\end{figure}
+
+
+
+\href{https://www.gogogate.com/index.html}{Pagina web de Gogogate}
+
 \section{Requerimientos Funcionales}
+
 \subsection{Instalación sencilla}
-Actualmente, los portones automáticos manejados por un simple control remoto independiente, dominan el mercado. Para que los usuarios tomen la iniciativa de cambiar de sistema este nuevo sistema debe ser de fácil y rápida instalación, de no ser así, los usuarios no optarían por realizar el cambio ya que implicaría un gran gasto de dinero y tiempo.
+Actualmente, los portones automáticos manejados por un simple control remoto independiente, dominan el mercado. Para que los usuarios tomen la iniciativa de cambiar de sistema este nuevo sistema debe ser de fácil y rápida instalación, de no ser así, los usuarios no optarán por realizar el cambio ya que implicaría un gran gasto de dinero y tiempo.
 Para lograr esto, el hardware utilizado será un simple embebido de bajo costo y gran disponibilidad. 
 \subsection{Fácil uso}
-La interfáz de usuario debe ser amigable e intuitiva. Tendrá un diseño orientado para dispositivos táctiles. No contendrá muchas opciones de configuración, ya que esto sera concentrado en el servidor de control.
+La interfaz de usuario debe ser amigable e intuitiva. Tendrá un diseño orientado para dispositivos táctiles. No contendrá muchas opciones de configuración, ya que esto será concentrado en el servidor de control.
 \subsection{Seguridad}
-Aquí se exige que solamente el usuario autorizado pueda ser capaz de controlar el comportamiento del portón. Para esto, se le solicitará al usuario se registre inicialmente en el sistema. Luego, cuando se desee abrir o cerrar el porton dicho usuario deberá proporcionar un PIN de autenticación extra.
+Aquí se exige que solamente el usuario autorizado pueda ser capaz de controlar el comportamiento del portón. Para esto, se le solicitará al usuario se registre inicialmente en el sistema. Luego, cuando se desee abrir o cerrar el portón dicho usuario deberá proporcionar un PIN de autenticación extra.
 \section{Diseño}
 SysMl define tres grupos de diagramas a alto nivel, estructura (modelo estático), comportamiento (modelo dinamico) y requerimientos. Los requerimientos en este caso ya fueron definidos anteriormente, ahora definiremos los bloque restantes: 
 \subsection{Modelado a nivel de sistema}
@@ -191,12 +232,12 @@ Un diagrama de secuencia nos mostrara la interacción entre las diferentes parte
 Luego de la descripción y modelado del sistema se define los recursos puntales que usaremos. Los mismos son los siguientes:
 
 \begin{itemize}
-        \item   Hardware Embebido: Raspberry Pi 3; este hardware tiene la capacidad de procesamiento necesaria para soportar los requerimientos del sistema, además de las interfaces necesarias como conectividad WiFi.
-        \item App Control: se desarrollará en el lenguaje Python. Python es un lenguaje interpretado que posee gran cantidad de librerías para el manejo de interfaces en la Raspberry Pi. Además es de muy fácil uso y tiene una comunidad grande para enfrentar cualquier dificultad.
-        \item   App Celular: se usará Android Studio para crear la aplicación de celular. El mismo brinda un manejo muy fácil para programan, montando en java y con gran cantidad de clases de uso general del dispositivo.
+	\item   Hardware Embebido: Raspberry Pi 3; este hardware tiene la capacidad de procesamiento necesaria para soportar los requerimientos del sistema, además de las interfaces necesarias como conectividad WiFi.
+	\item App Control: se desarrollará en el lenguaje Python. Python es un lenguaje interpretado que posee gran cantidad de librerías para el manejo de interfaces en la Raspberry Pi. Además es de muy fácil uso y tiene una comunidad grande para enfrentar cualquier dificultad.
+	\item   App Celular: se usará Android Studio para crear la aplicación de celular. El mismo brinda un manejo muy fácil para programan, montando en java y con gran cantidad de clases de uso general del dispositivo.
+	
+\end{itemize}
 
-    \end{itemize}
-    
 \section{Bibliografía}
 
 
@@ -208,3 +249,4 @@ Luego de la descripción y modelado del sistema se define los recursos puntales 
 %\end{figure}
 
 \end{document}
+
