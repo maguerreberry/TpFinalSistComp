@@ -1,0 +1,155 @@
+% simple.tex - A simple article to illustrate document structure.
+
+% Andrew Roberts - June 2003
+
+\documentclass[16pt, article,notitlepage]{article}
+\usepackage[spanish]{babel}%Para el español
+\usepackage[utf8]{inputenc}
+
+
+%\usepackage{times}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{pdfpages}
+
+\usepackage{verbatim}
+
+\usepackage{amsmath}
+\usepackage{courier} %--lisitngs
+\usepackage{mathptmx} %-->TimesNewRoman
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\definecolor{dark-gray}{cmyk}{0,0,0,0.7}
+\DeclareCaptionFormat{listing}{\colorbox{dark-gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont={white,sf},textfont={white,sf}}
+
+\usepackage{graphicx} % Required for including pictures
+
+\usepackage{float} % Allows putting an [H] in \begin{figure} to specify the exact location of the figure
+\usepackage{wrapfig} % Allows in-line images such as the example fish picture
+\graphicspath{{Imagenes/}} % Specifies the directory where pictures are stored
+
+\usepackage{xcolor}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+backgroundcolor=\color{gray!20!white},
+    tabsize=2,
+    literate=%
+	{á}{{\'{a}}}1
+    {é}{{\'{e}}}1
+    {í}{{\'{i}}}1
+    {ó}{{\'{o}}}1
+    {ú}{{\'{u}}}1
+    {ñ}{{\~{n}}}1
+    {<}{{$<$}}1
+    {>}{{$>$}}1,
+%   rulecolor=,
+    %language=C,
+    %language=bash,
+    	linewidth=12.2cm,
+		belowcaptionskip=0.1\baselineskip,
+		xleftmargin=\parindent,        
+        %basicstyle=\scriptsize,
+        basicstyle=\footnotesize\bfseries\ttfamily\color{black!80!white},
+        upquote=true,
+        %aboveskip={1.5\baselineskip},
+        columns=fixed,
+       	showstringspaces=false,
+        extendedchars=false,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	%frame=lines,
+        numbers=left,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        commentstyle=\color{orange!80!black},
+        keywordstyle=\bfseries\color[rgb]{0,0,1},
+        %commentstyle=\bfseries\color[rgb]{0.026,0.112,0.095},
+        %stringstyle=\bfseries\color[rgb]{0.627,0.126,0.941},
+        stringstyle=\bfseries\color{green!50!black},
+        numberstyle=\ttfamily\color[rgb]{0.205, 0.142, 0.73},
+%        \lstdefinestyle{C++}{language=C++,style=numbers}’.
+}
+\lstdefinelanguage{linux_bash}
+{ language=bash,%-->me baso en bash
+alsoletter={-},%-->me habilita (-) en medio de los keywords
+morekeywords={sudo,nano,apt-get,cd,ls,ln,mkdir,ifconfig,cp,wget,ppa:,add-apt-repository,install,a2ensite,service,curl},
+%sensitive=false,
+}
+\lstdefinelanguage{cisco}
+{
+alsoletter={-},%-->me habilita (-) en medio de los keywords
+keywords={enable,configure,terminal,interface,fastEthernet,ipv6,address,no,shutdown,route,running-config,startup-config,copy,exit,unicast-routing,brief},
+%sensitive=false,
+}
+
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\familydefault}{\rmdefault}
+\pretolerance=2000
+\tolerance=3000
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+\usepackage{hyperref}
+\hypersetup{%
+colorlinks=true,
+urlcolor=blue,
+urlbordercolor=blue,
+pdfborderstyle={/S/U/W 1}%
+}
+
+\begin{document}
+
+\begin{figure}[H] % Example image
+	\center{\includegraphics[width=0.8\linewidth]{./images/header_unc.png}}
+\end{figure}
+
+% Article top matter
+
+\title{%\HRule \\[0.4cm]		
+	{ \bfseries{Trabajo Final - Control Remoto de un portón doméstico}}\\[0.4cm]
+	%\HRule \\[1.5cm]
+} %\LaTeX is a macro for printing the Latex logo
+\author{
+	\textsc{Tomattis}, Natasha  {\small \texttt{Mat:38.728.783}}\\
+	\href{mailto:natitomattis@gmail.com}{natitomattis@gmail.com}\\
+	\textsc{Trombotto}, Agustín  {\small \texttt{Mat:39.071.116}}\\
+	\href{mailto:gutitrombotto@gmail.com}{gutitrombotto@gmail.com}\\
+	\textsc{Aguerreberry}, Matthew  {\small \texttt{Mat:93.739.112}}\\
+	\href{mailto:mtaguerreberry@gmail.com}{mtaguerreberry@gmail.com}\\
+}
+%\affil{Facultad de Ciencias Exáctas, Físicas \& Naturales, Universidad Nacional de Córdoba, Argentina.}
+
+%\date{\today}  %\today is replaced with the current date
+%\maketitle
+{\let\newpage\relax\maketitle}
+
+\newpage
+
+\maketitle
+ 
+\tableofcontents
+
+\newpage
+\section{Introducción}
+\section{Marco Teórico}
+\section{Requerimientos Funcionales}
+\subsection{Instalacion sencilla}
+\subsection{Facil uso}
+\subsection{Seguridad}
+\section{Diseño}
+\section{Bibliografía}
+
+
+
+%\begin{figure}[H] % Example image
+%	\center{\includegraphics[width=0.8\linewidth]{./mensajesUdpWireshark.png}}
+%	\caption{Mensajes UDP analiados en Wireshark}
+%	\label{fig:top_en1}
+%\end{figure}
+
+\end{document}
