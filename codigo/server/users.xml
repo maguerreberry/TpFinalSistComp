@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<users>
+	<user>
+		<name>nati</name>
+		<pwd>naguma1</pwd>	
+	</user>
+	<user>
+		<name>matt</name>
+		<pwd>naguma2</pwd>	
+	</user>
+	<user>
+		<name>guti</name>
+		<pwd>naguma3</pwd>	
+	</user>
+</users>
