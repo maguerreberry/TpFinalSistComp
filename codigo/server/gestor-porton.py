@@ -19,25 +19,32 @@ serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(('localhost', 8089))
 serversocket.listen(5) # become a server socket, maximum 5 connections
 
-users = []
+users_list = []
+
+xfile_tree = xml.parse('users.xml')
+xfile = xfile_tree.getroot()
 
 try:
     if sys.argv[1] == "--config":
         admin_name = input('Ingrese Nombre del admin\n')
         admin_pwd = input('Ingrese Pass del admin\n')
         new_admin = Usuario(admin_name, admin_pwd)
-        users.append(new_admin)
+        new_user = xml.SubElement(xfile,'user')
+        new_name = xml.SubElement(new_user, 'name')
+        new_name.text = admin_name
+        new_pwd = xml.SubElement(new_user, 'pwd')
+        new_pwd.text = admin_pwd
+        xfile_tree.write('users.xml')
 except:
     pass
     
-xfile = xml.parse('users.xml').getroot()
 
 for user in xfile:
-    users.append(Usuario(user[0].text, user[1].text))
+    users_list.append(Usuario(user[0].text, user[1].text))
 
-for ii in range(len(users)):
-    print ("name:", users[ii].get_user_name())
-    print ("pwd:",users[ii].get_user_pwd())
+for ii in range(len(users_list)):
+    print ("name:", users_list[ii].get_user_name())
+    print ("pwd:",users_list[ii].get_user_pwd())
 
 while True:
     connection, address = serversocket.accept()
