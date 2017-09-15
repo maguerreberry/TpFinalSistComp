@@ -40,7 +40,7 @@ gpio.output(16,False)
 gpio.output(18,False)
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serversocket.bind(('192.168.0.12', 7000))
+serversocket.bind(('192.168.0.12', 7001))
 serversocket.listen(5) # become a server socket, maximum 5 connections
 
 users_list = []
@@ -77,48 +77,54 @@ while True:
     data = buf.decode()
     data = data.split('-')
     
-    if len(data) != 3:
+    if len(data) < 3:
         print('Datos Incorrectos')
-        exit(-1)
-    
-    client_user = data[0]
-    client_pwd = data[1]
-    data[2] = data[2].split('\r\n')
-    client_cmd = data[2][0]
+    else:    
+        client_user = data[0]
+        client_pwd = data[1]
+        data[2] = data[2].split('\r\n')
+        client_cmd = data[2][0]
 
-    print('client_user |%s|' %client_user, 'client_pwd |%s|' %client_pwd, 'client_cmd |%s|' %client_cmd)
-    
-    usuario_cliente = Usuario("nada", "nada", "nada") 
+        print('client_user |%s|' %client_user, 'client_pwd |%s|' %client_pwd, 'client_cmd |%s|' %client_cmd)    
+        usuario_cliente = Usuario("nada", "nada", "nada") 
 
-    for user_object in users_list:
-        if(str(user_object.get_user_name()) == client_user):
-            if (str(user_object.get_user_pwd()) == client_pwd):
-                usuario_cliente = user_object
-                # connection.send("Usuario Autenticado".encode())   
-                connection.send(user_object.get_user_pl().encode())   
+        for user_object in users_list:
+            if(str(user_object.get_user_name()) == client_user):
+                if (str(user_object.get_user_pwd()) == client_pwd):
+                    usuario_cliente = user_object
+                    connection.send("Usuario Autenticado".encode())
+                    client_pl = user_object.get_user_pl()   
+                    connection.send(client_pl.encode())   
     
-    if(usuario_cliente.get_user_name() == "nada"):
-        connection.send("Usuario o clave incorrecta".encode())   
+        if(usuario_cliente.get_user_name() == "nada"):
+            connection.send("Usuario o clave incorrecta".encode())   
     
-    else:
-        if client_cmd == 'abrir':
-            gpio.output(16,True)
-            gpio.output(18,False)
-            time.sleep(15)
-            gpio.output(16,False)
-
-        elif client_cmd == 'cerrar':
-            gpio.output(18,True)
-            gpio.output(16,False)
-            time.sleep(10)
-            gpio.output(18,False)
-
-        elif client_cmd == 'exit':
-        	print('chau')
-        	serversocket.close()
-        	break
         else:
-        	print('Comando incorrecto')
+            if client_cmd == 'new_user':
+                if client_pl == "0":                    
+                    data[4] = data[4].split('\r\n')
+                    new_user(users_list, data[3], data[4][0], "1")
+                else:
+                    connection.send("Operacion no permitida.".encode())
+                
+            elif client_cmd == 'abrir':
+                gpio.output(16,True)
+                gpio.output(18,False)
+                time.sleep(15)
+                gpio.output(16,False)
+    
+            elif client_cmd == 'cerrar':
+                gpio.output(18,True)
+                gpio.output(16,False)
+                time.sleep(10)
+                gpio.output(18,False)
+
+            elif client_cmd == 'exit':
+            	print('chau')
+            	serversocket.close()
+            	break
+            else:
+            	print('Comando incorrecto')
 
     #serversocket.close()
     #break
