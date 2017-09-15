@@ -10,8 +10,7 @@ def new_user(users_list, name, pwd, pl):
 
     for user in users_list:
         if(user.get_user_name() == name):
-            print("ERROR! User '%s' already exists!" %name)
-            exit(-1)
+            return 22
 
     xfile_tree = xml.parse('users.xml')
     xfile_root = xfile_tree.getroot()
@@ -26,6 +25,8 @@ def new_user(users_list, name, pwd, pl):
     xfile_tree.write('users.xml')
 
     users_list.append(Usuario(name, pwd, pl))
+
+    return 0
 
 gpio.setmode(gpio.BOARD)
 gpio.setup(16,gpio.OUT)
@@ -49,74 +50,72 @@ if(len(sys.argv) > 1):
     if sys.argv[1] == "--config":
         admin_name = input('Ingrese nombre del admin\n')
         admin_pwd = input('Ingrese clave del admin\n')                
-        new_user(users_list, admin_name, admin_pwd, "0")
+        if(22 == new_user(users_list, admin_name, admin_pwd, "0")):
+            print("ERROR! User exists.")
+            exit(-1)
+
     else:
         print("ERROR! Invalid CLI Command! Use '--config' option to create admin user.")
         exit(-1)
 
-connection, address = serversocket.accept()
-
 cifrador = Encriptador()
 
-while True:
-    buf = connection.recv(64)
+while True:    
+    connection, address = serversocket.accept()
     
-    if len(buf) <= 0:
-        print ("ERROR! Buffer empty!")
-        exit(-1)
+    data = [""]
+    while len(data) < 3:
+        buf = connection.recv(64)            
+        #buf = cifrador.do_decrypt(buf)
+        data = buf.decode()
+        data = data.split('-')
+        
+    client_user = data[0]
+    client_pwd = data[1]
+    data[2] = data[2].split('\n')
+    client_cmd = data[2][0]
 
-    # buf = cifrador.do_decrypt(buf)
-    data = buf.decode()
-    data = data.split('-')
-    
-    if len(data) < 3:
-        print('Datos Incorrectos')
-    else:    
-        client_user = data[0]
-        client_pwd = data[1]
-        data[2] = data[2].split('\r\n')
-        client_cmd = data[2][0]
+    print('client_user |%s|' %client_user, 'client_pwd |%s|' %client_pwd, 'client_cmd |%s|' %client_cmd)    
+    usuario_cliente = Usuario("nada", "nada", "nada") 
 
-        print('client_user |%s|' %client_user, 'client_pwd |%s|' %client_pwd, 'client_cmd |%s|' %client_cmd)    
-        usuario_cliente = Usuario("nada", "nada", "nada") 
-
-        for user_object in users_list:
-            if(str(user_object.get_user_name()) == client_user):
-                if (str(user_object.get_user_pwd()) == client_pwd):
-                    usuario_cliente = user_object
-                    connection.send(cifrador.do_encrypt("Usuario Autenticado").encode())
-                    client_pl = user_object.get_user_pl()   
-                    connection.send(cifrador.do_encrypt(client_pl).encode())   
+    for user_object in users_list:
+        if(str(user_object.get_user_name()) == client_user):
+            if (str(user_object.get_user_pwd()) == client_pwd):
+                usuario_cliente = user_object
+                client_pl = user_object.get_user_pl()   
+        
+    if(usuario_cliente.get_user_name() == "nada"):
+        connection.send(cifrador.do_encrypt("Incorrecto").encode())   
     
-        if(usuario_cliente.get_user_name() == "nada"):
-            connection.send(cifrador.do_encrypt("Usuario o clave incorrecta").encode())   
-    
-        else:
-            if client_cmd == 'new_user':
-                if client_pl == "0":                    
-                    data[4] = data[4].split('\r\n')
-                    new_user(users_list, data[3], data[4][0], "1")
-                else:
-                    connection.send(cifrador.do_encrypt("Operacion no permitida.").encode())
+    else:
+        if client_cmd == 'new_user':
+            if client_pl == "0":                    
+                data[4] = data[4].split('\n')
+                if new_user(users_list, data[3], data[4][0], "1") == 22:
+                    connection.send(cifrador.do_encrypt("existente").encode())
+                else:                       
+                    connection.send(cifrador.do_encrypt("okay").encode())   
                 
-            elif client_cmd == 'abrir':
-                gpio.output(16,True)
-                gpio.output(18,False)
-                time.sleep(15)
-                gpio.output(16,False)
-    
-            elif client_cmd == 'cerrar':
-                gpio.output(18,True)
-                gpio.output(16,False)
-                time.sleep(15)
-                gpio.output(18,False)
+        elif client_cmd == 'abrir':
+            #gpio.output(16,True)
+            #gpio.output(18,False)
+            connection.send(cifrador.do_encrypt("abriendo").encode())   
+            #time.sleep(15)
+            #gpio.output(16,False)
+            pass
 
-            elif client_cmd == 'exit':
-            	print('chau')
-            	serversocket.close()
-            	break
-            else:
-            	print('Comando incorrecto')
+        elif client_cmd == 'cerrar':
+            #gpio.output(18,True)
+            #gpio.output(16,False)
+            connection.send(cifrador.do_encrypt("cerrando").encode())   
+            #time.sleep(12)
+            #gpio.output(18,False)
+            pass
 
-    #serversocket.close()
-    #break
+        elif client_cmd == 'login':
+            connection.send(cifrador.do_encrypt(client_pl).encode())   
+
+        else:
+            print('Comando incorrecto')
+
+    connection.close()
