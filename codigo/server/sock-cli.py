@@ -36,22 +36,24 @@ if __name__ == '__main__':
 
 	# clientsocket.connect(('192.168.0.14', 8089))
 	try:
-		clientsocket.connect(('localhost', 8089)) 
+		clientsocket.connect(('localhost', 7001)) 
 	except Exception as e: 
 		print("Exception is %s" %  e)
 
 	while 1:
 		if user_in == 0:
 			print('LOGIN - Ingrese su usuario y password para el acceso al sistema')
-			new_username = input('Nombre de usuario')
-			new_password = input('Password')
+			new_username = input('Nombre de usuario\n')
+			new_password = input('Password\n')
 
-			message = '01-%s-%s' % (new_username,new_password) #Login de un nuevo usuario
+			message = '%s-%s-01' % (new_username,new_password) #Login de un nuevo usuario
 
 			c_text = do_encrypt(message)
 			clientsocket.send(c_text)
 
-			login_ok = do_decrypt(clientsocket.recv(64))
+			# login_ok = do_decrypt(clientsocket.recv(64))
+			login_ok = clientsocket.recv(64)
+			print("login_ok", login_ok.decode())
 
 			if login_ok == '2':
 				is_admin = 1
