@@ -65,9 +65,11 @@ while True:
     
     data = [""]
     while len(data) < 3:
-        buf = connection.recv(64)            
-        #buf = cifrador.do_decrypt(buf)
-        data = buf.decode()
+        buf = connection.recv(64)    
+        try:
+            data = cifrador.do_decrypt(buf)
+        except:
+            data = buf.decode()
         data = data.split('-')
         
     client_user = data[0]
@@ -82,14 +84,13 @@ while True:
         if(str(user_object.get_user_name()) == client_user):
             if (str(user_object.get_user_pwd()) == client_pwd):
                 usuario_cliente = user_object
-                client_pl = user_object.get_user_pl()   
         
     if(usuario_cliente.get_user_name() == "nada"):
         connection.send(cifrador.do_encrypt("Incorrecto").encode())   
     
     else:
         if client_cmd == 'new_user':
-            if client_pl == "0":                    
+            if usuario_cliente.get_user_pl() == "0":                    
                 data[4] = data[4].split('\n')
                 if new_user(users_list, data[3], data[4][0], "1") == 22:
                     connection.send(cifrador.do_encrypt("existente").encode())
@@ -97,23 +98,23 @@ while True:
                     connection.send(cifrador.do_encrypt("okay").encode())   
                 
         elif client_cmd == 'abrir':
-            #gpio.output(16,True)
-            #gpio.output(18,False)
+            gpio.output(16,True)
+            gpio.output(18,False)
             connection.send(cifrador.do_encrypt("abriendo").encode())   
-            #time.sleep(15)
-            #gpio.output(16,False)
+            time.sleep(12)
+            gpio.output(16,False)
             pass
 
         elif client_cmd == 'cerrar':
-            #gpio.output(18,True)
-            #gpio.output(16,False)
+            gpio.output(18,True)
+            gpio.output(16,False)
             connection.send(cifrador.do_encrypt("cerrando").encode())   
-            #time.sleep(12)
-            #gpio.output(18,False)
+            time.sleep(12)
+            gpio.output(18,False)
             pass
 
         elif client_cmd == 'login':
-            connection.send(cifrador.do_encrypt(client_pl).encode())   
+            connection.send(cifrador.do_encrypt(usuario_cliente.get_user_pl()).encode())   
 
         else:
             print('Comando incorrecto')
