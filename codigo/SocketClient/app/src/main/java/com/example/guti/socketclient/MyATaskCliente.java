@@ -25,11 +25,12 @@ class MyATaskCliente extends AsyncTask<String,Void,String> {
     /**
      * Puerto
      * */
-    private static final int SERVERPORT = 8089;
+    private static final int SERVERPORT = 7000;
     /**
      * HOST
      * */
-    private static final String ADDRESS = "10.0.2.2";
+    //private static final String ADDRESS = "10.0.2.2";
+    private static final String ADDRESS = "192.168.0.121";
 
     /**
      * Ventana que bloqueara la pantalla del movil hasta recibir respuesta del servidor
@@ -72,11 +73,11 @@ class MyATaskCliente extends AsyncTask<String,Void,String> {
 
             PrintStream output = new PrintStream(socket.getOutputStream());
             String request = values[0];
-            String request1 = "-" + values[1];
             //request.concat(request1);
-            Log.i("I/TCP Client", "Sending: " + request + request1);
+
+            Log.i("I/TCP Client", "Sending: " + request);
             //request = encryption.encryptOrNull(request);
-            output.println(request + request1);
+            output.println(request);
 
 
             //recibe respuesta del servidor y formatea a String
@@ -86,7 +87,7 @@ class MyATaskCliente extends AsyncTask<String,Void,String> {
             stream.read(lenBytes,0,256);
             String received = new String(lenBytes,"UTF-8").trim();
             Log.i("I/TCP Client", "Received " + received);
-            //received = encryption.decryptOrNull(received);
+            //received = encryption.decryptOroNull(received);
             Log.i("I/TCP Client", "");
             //cierra conexion
             socket.close();
@@ -106,7 +107,7 @@ class MyATaskCliente extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String value){
         progressDialog.dismiss();
-        Toast.makeText(context, value, Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, value, Toast.LENGTH_LONG).show();
         //password.setText(value);
     }
 }

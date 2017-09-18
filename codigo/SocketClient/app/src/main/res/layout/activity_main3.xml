@@ -10,22 +10,85 @@
     tools:context="com.example.guti.socketclient.Main3Activity"
     android:orientation="vertical">
 
-    <Switch
-        android:id="@+id/switch1"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:checked="false"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Usuario"
+        android:id="@+id/admin"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btn_abrir"
+        android:layout_toEndOf="@+id/btn_abrir" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Abrir Porton"
-        android:textOff="Off"
-        android:textOn="On"
-        android:layout_centerHorizontal="true"
-        android:textSize="25sp"
-        />
+        android:id="@+id/btn_abrir"
+        android:background="#06c7f7"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:onClick="abrir_porton"
+        android:layout_below="@+id/admin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Porton"
+        android:id="@+id/btn_cerrar"
+        android:background="#0606f7"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:onClick="cerrar_porton"
+        android:layout_gravity="right"
+        android:layout_alignTop="@+id/btn_abrir"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/btn_logout"
+        android:background="#e40acf"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:onClick="logout"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/btn_cerrar"
+        android:layout_alignLeft="@+id/btn_cerrar"
+        android:layout_alignStart="@+id/btn_cerrar"
+        android:layout_marginTop="49dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
-        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/estado_abriendo"
+        android:text=" Ninguno... "
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:textColor="#0881fa" />
+
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estado del Boton" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Estado del Porton"
+        android:id="@+id/textView"
+        android:fontFamily="@string/abc_font_family_body_1_material"
+        android:foregroundTint="#42fb67"
+        android:textColor="#0cf62f"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     </RelativeLayout>
